@@ -1,6 +1,6 @@
 <template>
 	<div class="header">
-		<div class="return-btn">
+		<div class="return-btn" @click="go()">
 			<img src="../../assets/img/return-arrows.png"/>
 		</div>
 		<span class="header-title">{{title}}</span>
@@ -20,7 +20,11 @@
 				default: ''
 			}
 		},
-		methods: {}
+		methods: {
+		    go(){
+          this.$router.go(-1);
+        }
+    }
 	}
 </script>
 

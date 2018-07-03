@@ -12,28 +12,51 @@
 			<div class="login-list">
 				<!--登录选择-->
 				<div class="login-sel">
-					<div class="sel-item" :class="{'sel-actve': true}">快速登录<span class="underline"></span></div>
-					<div class="sel-item">密码登录<span class="underline"></span></div>
+					<div class="sel-item" :class="{'sel-actve':styleType}" @click="loginType = true;styleType = !styleType">快速登录<span class="underline"></span></div>
+					<div class="sel-item" :class="{'sel-actve':!styleType}" @click="loginType = false;styleType = !styleType">密码登录<span class="underline"></span></div>
 				</div>
 				<!--快速登录-->
-				<div class="login-box">
+				<div class="login-box" v-show="loginType">
 					<div class="input-box">
 						<img src="../../assets/img/phone.png" />
-						<input type="number" name="" id="" value="" placeholder="请输入手机号" />
+						<!--<input type="number" name="" id="" value="" placeholder="请输入手机号" />-->
+            <mt-field placeholder="请输入手机号" type="number" class="inputss" name="" id="" value="" v-model="phone"></mt-field>
 					</div>
 					<div class="input-box">
 						<img src="../../assets/img/verification-code.png" />
-						<input class="code-input" type="text" name="" id="" value="" placeholder="请输入验证码" />
+						<!--<input class="code-input" type="text" name="" id="" value="" placeholder="请输入验证码" />-->
+            <mt-field  placeholder="请输入验证码" class="code-input inputss" type="text" name="" id="" value="" v-model="VfCode"></mt-field>
 						<div class="code-btn">获取验证码</div>
 					</div>
-					<div class="login-btn">登录</div>
-				</div>
-			</div>
-			<!--用户协议-->
-			<div class="agreement">
-				<img src="../../assets/img/wordpass-btn.png" />
-				<span>用户已同意平台协议内容</span>
-			</div>
+					<div class="login-btn" :class="imgC && phone != '' && VfCode != '' ? 'login_go_btn':'' " @click="phoneLogin()">登录</div>
+        </div>
+
+        <!--密码登录-->
+        <div class="login-box" v-show="!loginType">
+          <div class="input-box">
+            <img src="../../assets/img/phone.png" />
+            <!--<input type="number" name="" id="" value="" placeholder="请输入账号或手机号" />-->
+            <mt-field placeholder="请输入账号或手机号" type="number" class="inputss" name="" id="" value="" v-model="username"></mt-field>
+          </div>
+          <div class="input-box">
+            <img src="../../assets/img/lock.png" />
+            <mt-field placeholder="请输入密码" type="password" class="inputss" v-model="password"></mt-field>
+          </div>
+          <div class="login-btn"  :class="username != '' && password != '' ? 'login_go_btn':'' " @click="UserLogin()">登录</div>
+        </div>
+
+      </div>
+      <!--用户协议-->
+      <div class="agreement" v-show="loginType">
+        <img src="../../assets/img/wordpass-btn.png" v-show="!imgC" @click="imgC = !imgC"/>
+        <img src="../../assets/img/wordpass-btn-yes.png" v-show="imgC" @click="imgC = !imgC"/>
+        <router-link to="/Agreement">用户已同意平台协议内容</router-link>
+      </div>
+      <!--注册忘记密码-->
+      <div class="register_forget" v-show="!loginType">
+        <router-link to="/Register">注册</router-link>
+        <router-link to="/ForgetPass">忘记密码 ?</router-link>
+      </div>
 		</div>
 	</div>
 </template>
@@ -43,7 +66,13 @@
 	export default {
 		data() {
 			return {
-
+			    imgC:false,
+          loginType:true,
+          styleType:true,
+          phone:'',
+          VfCode:'',
+          username:'',
+          password:'',
 			};
 		},
 		props: {
@@ -55,7 +84,34 @@
 		components: {
 			VHeader,
 		},
-		methods: {}
+		methods: {
+      phoneLogin(){
+          if(this.imgC && this.phone != '' && this.VfCode != ''){
+//              加入接口
+            this.$router.push({path:'/'})
+          }else{
+            this.$toast({
+              message: '请输入完整',
+              position: 'middle',
+              duration: 2000
+            });
+            return ;
+          }
+      },
+      UserLogin(){
+        if(this.username != '' && this.password != ''){
+//              加入接口
+          this.$router.push({path:'/'})
+        }else{
+          this.$toast({
+            message: '请输入完整',
+            position: 'middle',
+            duration: 2000
+          });
+          return ;
+        }
+      }
+    }
 	}
 </script>
 
@@ -110,18 +166,25 @@
 						width: 100%;
 						height: 98px;
 						line-height: 98px;
-						border-bottom: 1px solid #eee;
+						/*border-bottom: 1px solid #eee;*/
+            display: flex;
 						img {
 							width: 36px;
 							margin: 28px 24px 28px 32px;
 						}
+            .inputss{
+              flex:1;
+            }
 						input {
 							height: 98px;
 							font-size: 26px;
 							width: 85%;
+              outline:none;
+
 						}
 						.code-input {
 							width: 50%;
+              outline:none;
 						}
 						.code-btn {
 							width: 150px;
@@ -146,10 +209,14 @@
 						text-align: center;
 						font-size: 34px;
 					}
+          .login_go_btn{
+            background-color: #fea712;
+          }
 				}
 			}
 			.agreement {
 				width: 100%;
+        margin-top:10px;
 				img {
 					width: 30px;
 					margin-right: 30px;
@@ -159,6 +226,16 @@
 					color: #9a9a9a;
 				}
 			}
+      .register_forget{
+        width:100%;
+        margin-top:10px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        padding:10px 30px;
+        display: flex;
+        justify-content:space-between;
+      }
 		}
 	}
 </style>

@@ -4,10 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import "./assets/js/flexible.js"
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
 //引入基础css文件
 import "./assets/css/common.css";
 Vue.config.productionTip = false
-
+Vue.use(MintUI)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
