@@ -67,14 +67,13 @@
       width: 100%;
       border: 2px solid #eee;
       overflow: hidden;
-      margin-bottom: 30px;
+      margin-bottom: 96px;
       margin-top:60px;
       border-radius: 20px;
       .input-box {
         width: 100%;
         height: 98px;
         line-height: 98px;
-        border-bottom: 1px solid #eee;
         display: flex;
         img {
           width: 36px;
@@ -84,8 +83,7 @@
           font-size:24px;
           position: relative;
           display: inline-block;
-          padding-right:10px;
-          margin-righ:10px;
+          padding-right:22px;
         }
         label::after{
           display: block;

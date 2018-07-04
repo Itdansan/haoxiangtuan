@@ -166,7 +166,6 @@
 						width: 100%;
 						height: 98px;
 						line-height: 98px;
-						/*border-bottom: 1px solid #eee;*/
             display: flex;
 						img {
 							width: 36px;

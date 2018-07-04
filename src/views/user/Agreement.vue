@@ -2,7 +2,7 @@
     <div class="Agreement">
       <VHeader title="协议内容"></VHeader>
       <div class="agreement_text">
-        <h4>1.Definitions</h4>
+        <h1>1.Definitions</h1>
         <p>1.1 Plant adaptations can be remarkably complex. Certain species of
         orchids, for instance, imitate female bees, other plants look and smell
         like dead animals, and still others have the appearance of stones.
@@ -54,8 +54,12 @@
   padding: 0 30px;
   margin-top:20px;
 
-  h4{
-    margin:4px 0;
+  h1{
+    margin:4px 0 20px;
+    font-weight:400;
+  }
+  p{
+    line-height:36px;
   }
 }
 
