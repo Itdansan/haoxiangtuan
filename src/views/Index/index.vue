@@ -101,6 +101,15 @@
 					loop: true,
 					autoplay: {
 						disableOnInteraction: false
+					},
+					pagination: {
+						el: '.swiper-pagination',
+					},
+					on: {
+						click: function(e) {
+							//some code
+							console.log(e);
+						}
 					}
 				}
 			}
